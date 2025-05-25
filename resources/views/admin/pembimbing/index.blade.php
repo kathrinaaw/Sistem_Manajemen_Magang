@@ -17,13 +17,38 @@
             </div>
         </div>
         <div class="col-auto">
-            <a href="{{ route('admin.pembimbing.create') }}" 
-               class="btn btn-lg px-4 py-2 fw-semibold shadow-sm"
-               style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white;">
-                <i class="fas fa-plus me-2"></i>Tambah Pembimbing
-            </a>
+            <div class="d-flex gap-3">
+                <!-- Button Kembali -->
+                <a href="{{ route('admin.dashboard') }}" 
+                   class="btn btn-lg px-4 py-2 fw-semibold shadow-sm btn-outline-secondary"
+                   style="border: 2px solid #6c757d; color: #6c757d;">
+                    <i class="fas fa-arrow-left me-2"></i>Kembali
+                </a>
+                
+                <!-- Button Tambah Pembimbing -->
+                <a href="{{ route('admin.pembimbing.create') }}" 
+                   class="btn btn-lg px-4 py-2 fw-semibold shadow-sm"
+                   style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white;">
+                    <i class="fas fa-plus me-2"></i>Tambah Pembimbing
+                </a>
+            </div>
         </div>
     </div>
+
+    <!-- Alert Messages -->
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
 
     <!-- Data Table Card -->
     <div class="card border-0 shadow-lg">
@@ -55,25 +80,29 @@
                     <tbody>
                         @foreach($pembimbing as $item)
                         <tr class="table-row-hover">
-                            <td class="py-3 px-4">{{ $item->nidn_pembimbing }}</td>
-                            <td class="py-3 px-4 fw-semibold">{{ $item->nama_pembimbing }}</td>
+                            {{-- PERBAIKAN: Gunakan array notation, bukan object notation --}}
+                            <td class="py-3 px-4">{{ $item['nidn_pembimbing'] ?? 'N/A' }}</td>
+                            <td class="py-3 px-4 fw-semibold">{{ $item['nama_pembimbing'] ?? 'N/A' }}</td>
                             <td class="py-3 px-4">
-                                <a href="mailto:{{ $item->email_pembimbing }}" class="text-decoration-none" style="color: #667eea;">
-                                    {{ $item->email_pembimbing }}
+                                <a href="mailto:{{ $item['email'] ?? '' }}" class="text-decoration-none" style="color: #667eea;">
+                                    {{ $item['email'] ?? 'N/A' }}
                                 </a>
                             </td>
-                            <td class="py-3 px-4">{{ $item->no_telp }}</td>
+                            <td class="py-3 px-4">{{ $item['no_telp'] ?? 'N/A' }}</td>
                             <td class="py-3 px-4 text-center">
                                 <div class="btn-group" role="group">
-                                    <a href="{{ route('admin.pembimbing.edit', $item->nidn_pembimbing) }}" 
+                                    {{-- PERBAIKAN: Gunakan array notation --}}
+                                    <a href="{{ route('admin.pembimbing.edit', $item['nidn_pembimbing']) }}" 
                                        class="btn btn-sm btn-outline-primary px-3"
                                        data-bs-toggle="tooltip" 
                                        title="Edit Data">
                                         Edit
                                     </a>
-                                    <form action="{{ route('admin.pembimbing.destroy', $item->nidn_pembimbing) }}" 
-                                          method="POST" class="d-inline"
-                                          onsubmit="return confirm('Yakin ingin menghapus data {{ $item->nama_pembimbing }}?')">
+                                    {{-- PERBAIKAN: Perbaiki form dan gunakan array notation --}}
+                                    <form onsubmit="return confirm('Yakin ingin menghapus data?')" 
+                                          action="{{ route('admin.pembimbing.destroy', $item['nidn_pembimbing']) }}" 
+                                          method="POST" 
+                                          class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" 
@@ -119,6 +148,16 @@
     transform: translateY(-2px);
     transition: all 0.3s ease;
 }
+.btn-outline-primary:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: white !important;
+}
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white !important;
+}
 .card {
     transition: all 0.3s ease;
     border-radius: 15px !important;
@@ -136,6 +175,14 @@
     }
     .btn-group .btn {
         padding: 0.25rem 0.5rem;
+    }
+    .d-flex.gap-3 {
+        flex-direction: column;
+        gap: 0.5rem !important;
+    }
+    .btn-lg {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
     }
 }
 * {

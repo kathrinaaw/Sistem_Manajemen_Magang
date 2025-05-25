@@ -21,8 +21,11 @@
                 </div>
             @endif
 
-            <!-- Tombol Tambah -->
-            <div class="d-flex justify-content-end mb-3">
+            <!-- Tombol Kembali dan Tambah -->
+            <div class="d-flex justify-content-between mb-3">
+                <a href="{{ url()->previous() }}" class="btn btn-outline-secondary shadow-sm">
+                    <i class="fas fa-arrow-left me-2"></i>Kembali
+                </a>
                 <a href="{{ route('mahasiswa.magang.create') }}" class="btn btn-primary shadow-sm">
                     <i class="fas fa-plus me-2"></i>Tambah Magang
                 </a>
@@ -48,16 +51,20 @@
                             <tbody>
                                 @forelse($magang as $m)
                                     <tr>
-                                        <td class="text-center">{{ $m->id_magang }}</td>
-                                        <td>{{ $m->mahasiswa->nama_mhs ?? '-' }}</td>
-                                        <td>{{ $m->perusahaan->nama_perusahaan ?? '-' }}</td>
-                                        <td>{{ $m->pembimbing->nama_pembimbing ?? '-' }}</td>
-                                        <td class="text-center">{{ \Carbon\Carbon::parse($m->tgl_mulai)->format('d M Y') }}</td>
-                                        <td class="text-center">{{ \Carbon\Carbon::parse($m->tgl_selesai)->format('d M Y') }}</td>
-                                        <td class="text-center">{{ $m->status_magang }}</td>
+                                        <td class="text-center">{{ $m['id_magang'] ?? '-' }}</td>
+                                        <td>{{ $m['mahasiswa']['nama_mhs'] ?? '-' }}</td>
+                                        <td>{{ $m['perusahaan']['nama_perusahaan'] ?? '-' }}</td>
+                                        <td>{{ $m['pembimbing']['nama_pembimbing'] ?? '-' }}</td>
+                                        <td class="text-center">
+                                            {{ isset($m['tgl_mulai']) ? \Carbon\Carbon::parse($m['tgl_mulai'])->format('d M Y') : '-' }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ isset($m['tgl_selesai']) ? \Carbon\Carbon::parse($m['tgl_selesai'])->format('d M Y') : '-' }}
+                                        </td>
+                                        <td class="text-center">{{ $m['status_magang'] ?? '-' }}</td>
                                         <!-- Opsi 2: Download PDF -->
                                         <td class="text-center">
-                                            <a href="{{ route('mahasiswa.magang.downloadPdf', $m->id_magang) }}" 
+                                            <a href="{{ route('mahasiswa.magang.downloadPdf', $m['id_magang'] ?? 0) }}" 
                                             class="btn btn-danger shadow-sm" title="Download PDF">
                                             Download PDF
                                             </a>

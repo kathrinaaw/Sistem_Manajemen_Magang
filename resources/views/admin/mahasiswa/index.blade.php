@@ -2,6 +2,14 @@
 
 @section('content')
 <div class="container mt-5">
+    <!-- Back Button -->
+    <div class="mb-3">
+        <a href="{{ route('admin.dashboard') }}" 
+           class="btn btn-outline-secondary px-4 py-2 fw-semibold shadow-sm">
+            <i class="fas fa-arrow-left me-2"></i>Kembali ke Dashboard
+        </a>
+    </div>
+
     <!-- Header Section -->
     <div class="row align-items-center mb-4">
         <div class="col">
@@ -245,6 +253,13 @@
 /* Custom Alert */
 .alert {
     border-radius: 10px !important;
+}
+
+/* Back Button Styling */
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
 }
 </style>
 

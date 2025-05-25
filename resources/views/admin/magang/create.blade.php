@@ -55,8 +55,8 @@
                             <select name="npm_mhs" class="form-select form-select-lg shadow-sm" style="background-color: #f8f9fc;" required>
                                 <option value="">Pilih Mahasiswa</option>
                                 @foreach($mahasiswa as $mhs)
-                                    <option value="{{ $mhs->npm_mhs }}" {{ old('npm_mhs') == $mhs->npm_mhs ? 'selected' : '' }}>
-                                        {{ $mhs->nama_mhs }}
+                                    <option value="{{ $mhs['npm_mhs'] }}" {{ old('npm_mhs') == $mhs['npm_mhs'] ? 'selected' : '' }}>
+                                        {{ $mhs['nama_mhs'] }}
                                     </option>
                                 @endforeach
                             </select>
@@ -70,8 +70,8 @@
                             <select name="id_perusahaan" class="form-select form-select-lg shadow-sm" style="background-color: #f8f9fc;" required>
                                 <option value="">Pilih Perusahaan</option>
                                 @foreach($perusahaan as $p)
-                                    <option value="{{ $p->id_perusahaan }}" {{ old('id_perusahaan') == $p->id_perusahaan ? 'selected' : '' }}>
-                                        {{ $p->nama_perusahaan }}
+                                    <option value="{{ $p['id_perusahaan'] }}" {{ old('id_perusahaan') == $p['id_perusahaan'] ? 'selected' : '' }}>
+                                        {{ $p['nama_perusahaan'] }}
                                     </option>
                                 @endforeach
                             </select>
@@ -85,8 +85,8 @@
                             <select name="nidn_pembimbing" class="form-select form-select-lg shadow-sm" style="background-color: #f8f9fc;" required>
                                 <option value="">Pilih Pembimbing</option>
                                 @foreach($pembimbing as $pb)
-                                    <option value="{{ $pb->nidn_pembimbing }}" {{ old('nidn_pembimbing') == $pb->nidn_pembimbing ? 'selected' : '' }}>
-                                        {{ $pb->nama_pembimbing }}
+                                    <option value="{{ $pb['nidn_pembimbing'] }}" {{ old('nidn_pembimbing') == $pb['nidn_pembimbing'] ? 'selected' : '' }}>
+                                        {{ $pb['nama_pembimbing'] }}
                                     </option>
                                 @endforeach
                             </select>
@@ -119,8 +119,8 @@
                             </label>
                             <select name="status_magang" class="form-select form-select-lg shadow-sm" style="background-color: #f8f9fc;" required>
                                 <option value="">Pilih Status</option>
-                                <option value="Mandiri" {{ old('status_magang') == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
-                                <option value="MBKM" {{ old('status_magang') == 'MBKM' ? 'selected' : '' }}>MBKM</option>
+                                <option value="mandiri" {{ old('status_magang') == 'mandiri' ? 'selected' : '' }}>Mandiri</option>
+                                <option value="mbkm" {{ old('status_magang') == 'mbkm' ? 'selected' : '' }}>MBKM</option>
                             </select>
                         </div>
 

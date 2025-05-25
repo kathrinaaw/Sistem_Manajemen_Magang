@@ -50,7 +50,8 @@
             </h5>
         </div>
         <div class="card-body p-4">
-            <form action="{{ route('admin.pembimbing.update', $pembimbing->nidn_pembimbing) }}" method="POST">
+            {{-- PERBAIKAN: Gunakan array notation untuk mengakses data --}}
+            <form action="{{ route('admin.pembimbing.update', $pembimbing['nidn_pembimbing']) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -64,7 +65,7 @@
                                class="form-control form-control-lg border-2 @error('nama_pembimbing') is-invalid @enderror" 
                                id="nama_pembimbing"
                                name="nama_pembimbing" 
-                               value="{{ old('nama_pembimbing', $pembimbing->nama_pembimbing) }}" 
+                               value="{{ old('nama_pembimbing', $pembimbing['nama_pembimbing'] ?? '') }}" 
                                maxlength="50"
                                placeholder="Masukkan nama lengkap"
                                style="border-color: #e0e6ed; border-radius: 10px;">
@@ -75,18 +76,19 @@
 
                     <!-- Email Field -->
                     <div class="col-md-6 mb-4">
-                        <label for="email_pembimbing" class="form-label fw-semibold text-dark">
+                        <label for="email" class="form-label fw-semibold text-dark">
                             <i class="fas fa-envelope me-2" style="color: #667eea;"></i>Email
                         </label>
+                        {{-- PERBAIKAN: Ubah name dari email_pembimbing ke email untuk consistency dengan controller --}}
                         <input type="email" 
-                               class="form-control form-control-lg border-2 @error('email_pembimbing') is-invalid @enderror" 
-                               id="email_pembimbing"
-                               name="email_pembimbing" 
-                               value="{{ old('email_pembimbing', $pembimbing->email_pembimbing) }}" 
+                               class="form-control form-control-lg border-2 @error('email') is-invalid @enderror" 
+                               id="email"
+                               name="email" 
+                               value="{{ old('email', $pembimbing['email'] ?? '') }}" 
                                maxlength="50"
                                placeholder="Masukkan email"
                                style="border-color: #e0e6ed; border-radius: 10px;">
-                        @error('email_pembimbing')
+                        @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -102,7 +104,7 @@
                                class="form-control form-control-lg border-2 @error('no_telp') is-invalid @enderror" 
                                id="no_telp"
                                name="no_telp" 
-                               value="{{ old('no_telp', $pembimbing->no_telp) }}" 
+                               value="{{ old('no_telp', $pembimbing['no_telp'] ?? '') }}" 
                                maxlength="13"
                                placeholder="Masukkan no. telepon"
                                style="border-color: #e0e6ed; border-radius: 10px;">
@@ -146,7 +148,6 @@
 </div>
 
 <style>
-/* Disalin dari style yang kamu pakai */
 .form-control:focus {
     border-color: #667eea !important;
     box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;

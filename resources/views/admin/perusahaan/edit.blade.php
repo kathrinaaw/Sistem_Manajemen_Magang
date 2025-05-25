@@ -50,7 +50,7 @@
             </h5>
         </div>
         <div class="card-body p-4">
-            <form action="{{ route('admin.perusahaan.update', $perusahaan->id_perusahaan) }}" method="POST">
+            <form action="{{ route('admin.perusahaan.update', $perusahaan['id_perusahaan']) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -64,7 +64,7 @@
                                class="form-control form-control-lg border-2 @error('nama_perusahaan') is-invalid @enderror"
                                id="nama_perusahaan"
                                name="nama_perusahaan"
-                               value="{{ old('nama_perusahaan', $perusahaan->nama_perusahaan) }}"
+                               value="{{ old('nama_perusahaan', $perusahaan['nama_perusahaan']) }}"
                                placeholder="Masukkan nama perusahaan"
                                style="border-color: #e0e6ed; border-radius: 10px;">
                         @error('nama_perusahaan')
@@ -81,7 +81,7 @@
                                class="form-control form-control-lg border-2 @error('email_perusahaan') is-invalid @enderror"
                                id="email_perusahaan"
                                name="email_perusahaan"
-                               value="{{ old('email_perusahaan', $perusahaan->email_perusahaan) }}"
+                               value="{{ old('email_perusahaan', $perusahaan['email_perusahaan']) }}"
                                placeholder="Masukkan email perusahaan"
                                style="border-color: #e0e6ed; border-radius: 10px;">
                         @error('email_perusahaan')
@@ -100,7 +100,7 @@
                                class="form-control form-control-lg border-2 @error('no_telp') is-invalid @enderror"
                                id="no_telp"
                                name="no_telp"
-                               value="{{ old('no_telp', $perusahaan->no_telp) }}"
+                               value="{{ old('no_telp', $perusahaan['no_telp']) }}"
                                placeholder="Masukkan no. telepon"
                                style="border-color: #e0e6ed; border-radius: 10px;">
                         @error('no_telp')
@@ -117,7 +117,7 @@
                                class="form-control form-control-lg border-2 @error('alamat') is-invalid @enderror"
                                id="alamat"
                                name="alamat"
-                               value="{{ old('alamat', $perusahaan->alamat) }}"
+                               value="{{ old('alamat', $perusahaan['alamat']) }}"
                                placeholder="Masukkan alamat"
                                style="border-color: #e0e6ed; border-radius: 10px;">
                         @error('alamat')

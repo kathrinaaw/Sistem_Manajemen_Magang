@@ -49,18 +49,20 @@
 
                         <!-- Mahasiswa -->
                         <div class="mb-4">
-                            <label class="form-label fw-semibold text-dark">
-                                <i class="fas fa-user-graduate me-2" style="color: #667eea;"></i>Mahasiswa
-                            </label>
-                            <select name="npm_mhs" class="form-select form-select-lg shadow-sm" style="background-color: #f8f9fc;" required>
-                                <option value="">Pilih Mahasiswa</option>
-                                @foreach($mahasiswa as $mhs)
-                                    <option value="{{ $mhs->npm_mhs }}" {{ old('npm_mhs') == $mhs->npm_mhs ? 'selected' : '' }}>
-                                        {{ $mhs->nama_mhs }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+    <label class="form-label fw-semibold text-dark">
+        <i class="fas fa-user-graduate me-2" style="color: #667eea;"></i>Mahasiswa
+    </label>
+    <input 
+        type="text" 
+        name="npm_mhs" 
+        class="form-control form-control-lg shadow-sm" 
+        style="background-color: #f8f9fc;" 
+        placeholder="Masukkan NPM Mahasiswa" 
+        value="{{ old('npm_mhs') }}" 
+        required
+    >
+</div>
+
 
                         <!-- Perusahaan -->
                         <div class="mb-4">
@@ -70,8 +72,8 @@
                             <select name="id_perusahaan" class="form-select form-select-lg shadow-sm" style="background-color: #f8f9fc;" required>
                                 <option value="">Pilih Perusahaan</option>
                                 @foreach($perusahaan as $p)
-                                    <option value="{{ $p->id_perusahaan }}" {{ old('id_perusahaan') == $p->id_perusahaan ? 'selected' : '' }}>
-                                        {{ $p->nama_perusahaan }}
+                                    <option value="{{ $p['id_perusahaan'] ?? '' }}" {{ old('id_perusahaan') == ($p['id_perusahaan'] ?? '') ? 'selected' : '' }}>
+                                        {{ $p['nama_perusahaan'] ?? 'Nama tidak tersedia' }}
                                     </option>
                                 @endforeach
                             </select>
@@ -85,8 +87,8 @@
                             <select name="nidn_pembimbing" class="form-select form-select-lg shadow-sm" style="background-color: #f8f9fc;" required>
                                 <option value="">Pilih Pembimbing</option>
                                 @foreach($pembimbing as $pb)
-                                    <option value="{{ $pb->nidn_pembimbing }}" {{ old('nidn_pembimbing') == $pb->nidn_pembimbing ? 'selected' : '' }}>
-                                        {{ $pb->nama_pembimbing }}
+                                    <option value="{{ $pb['nidn_pembimbing'] ?? '' }}" {{ old('nidn_pembimbing') == ($pb['nidn_pembimbing'] ?? '') ? 'selected' : '' }}>
+                                        {{ $pb['nama_pembimbing'] ?? 'Nama tidak tersedia' }}
                                     </option>
                                 @endforeach
                             </select>
@@ -119,8 +121,8 @@
                             </label>
                             <select name="status_magang" class="form-select form-select-lg shadow-sm" style="background-color: #f8f9fc;" required>
                                 <option value="">Pilih Status</option>
-                                <option value="Mandiri" {{ old('status_magang') == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
-                                <option value="MBKM" {{ old('status_magang') == 'MBKM' ? 'selected' : '' }}>MBKM</option>
+                                <option value="mandiri" {{ old('status_magang') == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                                <option value="mbkm" {{ old('status_magang') == 'MBKM' ? 'selected' : '' }}>MBKM</option>
                             </select>
                         </div>
 

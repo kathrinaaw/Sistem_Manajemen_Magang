@@ -59,7 +59,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Daftar Perusahaan Mitra</h6>
         </div>
         <div class="card-body">
-            @if($perusahaanList->count() > 0)
+            @if(count($perusahaanList) > 0)
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -69,7 +69,7 @@
                                 <th>Alamat</th>
                                 <th>No. Telepon</th>
                                 <th>Email</th>
-                                <th>Jumlah Magang</th>
+                                <th>Sisa Kuota</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -77,20 +77,17 @@
                             @foreach($perusahaanList as $index => $perusahaan)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>
-                                        <strong>{{ $perusahaan->nama_perusahaan }}</strong>
-                                    </td>
-                                    <td>{{ $perusahaan->alamat }}</td>
-                                    <td>{{ $perusahaan->no_telp }}</td>
-                                    <td>{{ $perusahaan->email_perusahaan }}</td>
+                                    <td><strong>{{ $perusahaan['nama_perusahaan'] }}</strong></td>
+                                    <td>{{ $perusahaan['alamat'] }}</td>
+                                    <td>{{ $perusahaan['no_telp'] }}</td>
+                                    <td>{{ $perusahaan['email_perusahaan'] }}</td>
                                     <td>
                                         <span class="badge badge-info">
-                                            {{ $perusahaan->jumlah_magang }} Mahasiswa
+                                            {{ $perusahaan['jumlah_magang'] ?? 0 }} Mahasiswa
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="{{ route('mahasiswa.perusahaan.show', $perusahaan->id_perusahaan) }}" 
-                                           class="btn btn-info btn-sm">
+                                        <a href="{{ route('mahasiswa.perusahaan.show', $perusahaan['id_perusahaan']) }}" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i> Detail
                                         </a>
                                     </td>

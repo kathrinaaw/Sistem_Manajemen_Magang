@@ -43,11 +43,14 @@
                             </label>
                             <input type="text" 
                                    name="nidn_pembimbing" 
-                                   class="form-control form-control-lg border-0 shadow-sm" 
+                                   class="form-control form-control-lg border-0 shadow-sm @error('nidn_pembimbing') is-invalid @enderror" 
                                    style="background-color: #f8f9fc;"
                                    value="{{ old('nidn_pembimbing') }}" 
                                    placeholder="Masukkan NIDN"
                                    required>
+                            @error('nidn_pembimbing')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Nama -->
@@ -57,25 +60,31 @@
                             </label>
                             <input type="text" 
                                    name="nama_pembimbing" 
-                                   class="form-control form-control-lg border-0 shadow-sm" 
+                                   class="form-control form-control-lg border-0 shadow-sm @error('nama_pembimbing') is-invalid @enderror" 
                                    style="background-color: #f8f9fc;"
                                    value="{{ old('nama_pembimbing') }}" 
                                    placeholder="Masukkan nama lengkap"
                                    required>
+                            @error('nama_pembimbing')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <!-- Email -->
+                        <!-- Email - PERBAIKAN: Ubah name dari email_pembimbing ke email -->
                         <div class="mb-4">
                             <label class="form-label fw-semibold text-dark">
                                 <i class="fas fa-envelope me-2" style="color: #667eea;"></i>Email
                             </label>
                             <input type="email" 
-                                   name="email_pembimbing" 
-                                   class="form-control form-control-lg border-0 shadow-sm" 
+                                   name="email" 
+                                   class="form-control form-control-lg border-0 shadow-sm @error('email') is-invalid @enderror" 
                                    style="background-color: #f8f9fc;"
-                                   value="{{ old('email_pembimbing') }}" 
+                                   value="{{ old('email') }}" 
                                    placeholder="contoh@email.com"
                                    required>
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Telepon -->
@@ -85,11 +94,14 @@
                             </label>
                             <input type="text" 
                                    name="no_telp" 
-                                   class="form-control form-control-lg border-0 shadow-sm" 
+                                   class="form-control form-control-lg border-0 shadow-sm @error('no_telp') is-invalid @enderror" 
                                    style="background-color: #f8f9fc;"
                                    value="{{ old('no_telp') }}" 
                                    placeholder="Contoh: 08123456789"
                                    required>
+                            @error('no_telp')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Buttons -->

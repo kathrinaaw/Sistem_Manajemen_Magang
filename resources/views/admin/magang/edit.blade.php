@@ -49,7 +49,7 @@
             </h5>
         </div>
         <div class="card-body p-4">
-            <form action="{{ route('admin.magang.update', $magang->id_magang) }}" method="POST">
+            <form action="{{ route('admin.magang.update', $magang['id_magang']) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -61,8 +61,8 @@
                         </label>
                         <select name="npm_mhs" class="form-select form-select-lg border-2" style="border-radius: 10px;" required>
                             @foreach($mahasiswa as $mhs)
-                                <option value="{{ $mhs->npm_mhs }}" {{ $magang->npm_mhs == $mhs->npm_mhs ? 'selected' : '' }}>
-                                    {{ $mhs->nama_mhs }}
+                                <option value="{{ is_array($mhs) ? $mhs['npm_mhs'] : $mhs->npm_mhs }}" {{ ($magang['npm_mhs'] ?? '') == (is_array($mhs) ? $mhs['npm_mhs'] : $mhs->npm_mhs) ? 'selected' : '' }}>
+                                    {{ is_array($mhs) ? $mhs['nama_mhs'] : $mhs->nama_mhs }}
                                 </option>
                             @endforeach
                         </select>
@@ -75,8 +75,8 @@
                         </label>
                         <select name="id_perusahaan" class="form-select form-select-lg border-2" style="border-radius: 10px;" required>
                             @foreach($perusahaan as $p)
-                                <option value="{{ $p->id_perusahaan }}" {{ $magang->id_perusahaan == $p->id_perusahaan ? 'selected' : '' }}>
-                                    {{ $p->nama_perusahaan }}
+                                <option value="{{ is_array($p) ? $p['id_perusahaan'] : $p->id_perusahaan }}" {{ ($magang['id_perusahaan'] ?? '') == (is_array($p) ? $p['id_perusahaan'] : $p->id_perusahaan) ? 'selected' : '' }}>
+                                    {{ is_array($p) ? $p['nama_perusahaan'] : $p->nama_perusahaan }}
                                 </option>
                             @endforeach
                         </select>
@@ -91,8 +91,8 @@
                         </label>
                         <select name="nidn_pembimbing" class="form-select form-select-lg border-2" style="border-radius: 10px;" required>
                             @foreach($pembimbing as $pb)
-                                <option value="{{ $pb->nidn_pembimbing }}" {{ $magang->nidn_pembimbing == $pb->nidn_pembimbing ? 'selected' : '' }}>
-                                    {{ $pb->nama_pembimbing }}
+                                <option value="{{ is_array($pb) ? $pb['nidn_pembimbing'] : $pb->nidn_pembimbing }}" {{ ($magang['nidn_pembimbing'] ?? '') == (is_array($pb) ? $pb['nidn_pembimbing'] : $pb->nidn_pembimbing) ? 'selected' : '' }}>
+                                    {{ is_array($pb) ? $pb['nama_pembimbing'] : $pb->nama_pembimbing }}
                                 </option>
                             @endforeach
                         </select>
@@ -104,8 +104,8 @@
                             <i class="fas fa-info-circle me-2" style="color: #667eea;"></i>Status Magang
                         </label>
                         <select name="status_magang" class="form-select form-select-lg border-2" style="border-radius: 10px;" required>
-                            <option value="Mandiri" {{ $magang->status_magang == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
-                            <option value="MBKM" {{ $magang->status_magang == 'MBKM' ? 'selected' : '' }}>MBKM</option>
+                            <option value="mandiri" {{ ($magang['status_magang'] ?? '') == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                            <option value="mbkm" {{ ($magang['status_magang'] ?? '') == 'MBKM' ? 'selected' : '' }}>MBKM</option>
                         </select>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                             <i class="fas fa-calendar-alt me-2" style="color: #667eea;"></i>Tanggal Mulai
                         </label>
                         <input type="date" name="tgl_mulai" class="form-control form-control-lg border-2" 
-                               value="{{ $magang->tgl_mulai }}" required style="border-radius: 10px;">
+                               value="{{ $magang['tgl_mulai'] ?? '' }}" required style="border-radius: 10px;">
                     </div>
 
                     <!-- Tanggal Selesai -->
@@ -126,9 +126,56 @@
                             <i class="fas fa-calendar-check me-2" style="color: #667eea;"></i>Tanggal Selesai
                         </label>
                         <input type="date" name="tgl_selesai" class="form-control form-control-lg border-2" 
-                               value="{{ $magang->tgl_selesai }}" required style="border-radius: 10px;">
+                               value="{{ $magang['tgl_selesai'] ?? '' }}" required style="border-radius: 10px;">
                     </div>
                 </div>
+
+                <!-- Info Current Data -->
+                @if(isset($magang['mahasiswa']) || isset($magang['perusahaan']) || isset($magang['pembimbing']))
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="alert alert-info border-0 shadow-sm" style="border-left: 4px solid #0dcaf0 !important; border-radius: 10px;">
+                            <h6 class="fw-semibold mb-3">
+                                <i class="fas fa-info-circle me-2" style="color: #0dcaf0;"></i>
+                                Informasi Data Saat Ini:
+                            </h6>
+                            <div class="row">
+                                @if(isset($magang['mahasiswa']))
+                                <div class="col-md-4 mb-2">
+                                    <div class="bg-white p-3 rounded-3 shadow-sm">
+                                        <strong class="text-primary d-block mb-1">
+                                            <i class="fas fa-user-graduate me-2"></i>Mahasiswa:
+                                        </strong>
+                                        <div class="text-dark fw-medium">{{ $magang['mahasiswa']['nama_mhs'] ?? '-' }}</div>
+                                        <small class="text-muted">{{ $magang['mahasiswa']['prodi'] ?? '-' }}</small>
+                                    </div>
+                                </div>
+                                @endif
+                                @if(isset($magang['perusahaan']))
+                                <div class="col-md-4 mb-2">
+                                    <div class="bg-white p-3 rounded-3 shadow-sm">
+                                        <strong class="text-success d-block mb-1">
+                                            <i class="fas fa-building me-2"></i>Perusahaan:
+                                        </strong>
+                                        <div class="text-dark fw-medium">{{ $magang['perusahaan']['nama_perusahaan'] ?? '-' }}</div>
+                                    </div>
+                                </div>
+                                @endif
+                                @if(isset($magang['pembimbing']))
+                                <div class="col-md-4 mb-2">
+                                    <div class="bg-white p-3 rounded-3 shadow-sm">
+                                        <strong class="text-warning d-block mb-1">
+                                            <i class="fas fa-chalkboard-teacher me-2"></i>Pembimbing:
+                                        </strong>
+                                        <div class="text-dark fw-medium">{{ $magang['pembimbing']['nama_pembimbing'] ?? '-' }}</div>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
 
                 <!-- Form Actions -->
                 <div class="d-flex justify-content-between align-items-center mt-4 pt-3" style="border-top: 2px solid #f8f9fa;">
@@ -146,7 +193,7 @@
 </div>
 
 <style>
-.form-control:focus {
+.form-control:focus, .form-select:focus {
     border-color: #667eea !important;
     box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
     transform: translateY(-2px);
@@ -173,13 +220,29 @@
     font-size: 0.95rem;
 }
 
-.form-control:hover {
+.form-control:hover, .form-select:hover {
     border-color: #667eea;
     transition: all 0.3s ease;
 }
 
 .alert {
     border-radius: 10px !important;
+}
+
+.alert-info {
+    background-color: #f0f9ff;
+    border-color: #0dcaf0;
+    color: #055160;
+}
+
+.alert-info .bg-white {
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.alert-info .bg-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 @media (max-width: 768px) {
@@ -195,10 +258,35 @@
         padding: 0.75rem 1.5rem;
         font-size: 1rem;
     }
+    
+    .alert-info .col-md-4 {
+        margin-bottom: 1rem;
+    }
 }
 
 * {
     transition: all 0.3s ease;
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Validasi tanggal
+    const tglMulai = document.querySelector('input[name="tgl_mulai"]');
+    const tglSelesai = document.querySelector('input[name="tgl_selesai"]');
+    
+    if (tglMulai && tglSelesai) {
+        tglMulai.addEventListener('change', function() {
+            tglSelesai.min = this.value;
+        });
+        
+        tglSelesai.addEventListener('change', function() {
+            if (this.value < tglMulai.value) {
+                alert('Tanggal selesai tidak boleh lebih kecil dari tanggal mulai');
+                this.value = '';
+            }
+        });
+    }
+});
+</script>
 @endsection

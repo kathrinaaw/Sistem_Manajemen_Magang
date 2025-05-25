@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 
 class MahasiswaController extends Controller
 {
     public function index()
     {
+        $response = Http::get('http://localhost:8080/mahasiswa');
         $mahasiswa = Mahasiswa::all();
         return view('admin.mahasiswa.index', compact('mahasiswa'));
     }
@@ -20,28 +23,32 @@ class MahasiswaController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'npm_mhs' => 'required|string|size:9|unique:mahasiswa,npm_mhs',
-            'nama_mhs' => 'required|string|max:20',
-            'prodi' => 'nullable|string|max:50',
-            'alamat' => 'nullable|string|max:50',
-            'no_telp' => 'nullable|string|size:13',
-            'email' => 'nullable|email|max:30',
-        ]);
+{
+    $request->validate([
+        'npm_mhs' => 'required|string|size:9|unique:mahasiswa,npm_mhs',
+        'nama_mhs' => 'required|string|max:20',
+        'prodi' => 'nullable|string|max:50',
+        'alamat' => 'nullable|string|max:50',
+        'no_telp' => 'nullable|string|size:13',
+        'email' => 'nullable|email|max:30',
+    ]);
 
-        Mahasiswa::create($request->all());
+    $response = Http::post('http://localhost:8080/mahasiswa', $request->all());
 
+    if ($response->successful()) {
         return redirect()->route('admin.mahasiswa.index')
-                         ->with('success', 'Data mahasiswa berhasil ditambahkan.');
+                         ->with('success', 'Berhasil menambahkan data.');
+    } else {
+        return back()->withErrors($response->json()['errors'])->withInput();
     }
+}
 
     public function edit(Mahasiswa $mahasiswa)
     {
         return view('admin.mahasiswa.edit', compact('mahasiswa'));
     }
 
-    public function update(Request $request, Mahasiswa $mahasiswa)
+        public function update(Request $request, Mahasiswa $mahasiswa)
     {
         $request->validate([
             'npm_mhs' => 'required|string|size:9|unique:mahasiswa,npm_mhs,' . $mahasiswa->npm_mhs . ',npm_mhs',
@@ -52,21 +59,32 @@ class MahasiswaController extends Controller
             'email' => 'nullable|email|max:30',
         ]);
 
-        $mahasiswa->update($request->all());
+        $response = Http::put("http://localhost:8080/mahasiswa/update/{$mahasiswa->npm_mhs}", $request->all());
 
-        return redirect()->route('admin.mahasiswa.index')
-                         ->with('success', 'Data mahasiswa berhasil diupdate.');
+        if ($response->successful()) {
+            // Opsional: update local DB jika perlu
+            $mahasiswa->update($request->all());
+
+            return redirect()->route('admin.mahasiswa.index')->with('success', 'Berhasil mengubah data.');
+        } else {
+            return back()->withErrors($response->json()['errors'] ?? ['error' => 'Gagal mengupdate data'])->withInput();
+        }
     }
 
     public function destroy(Mahasiswa $mahasiswa)
     {
-        $mahasiswa->delete();
+        $response = Http::delete("http://localhost:8080/mahasiswa/delete/{$mahasiswa->npm_mhs}");
 
-        return redirect()->route('admin.mahasiswa.index')
-                         ->with('success', 'Data mahasiswa berhasil dihapus.');
+        if ($response->successful()) {
+            // Opsional: hapus lokal jika perlu
+            $mahasiswa->delete();
+
+            return redirect()->route('admin.mahasiswa.index')->with('success', 'Berhasil menghapus data.');
+        } else {
+            return back()->with('error', 'Gagal menghapus data.');
+        }
     }
 
-    // (Opsional) method show kalau mau pakai view detail
     public function show(Mahasiswa $mahasiswa)
     {
         return view('admin.mahasiswa.show', compact('mahasiswa'));

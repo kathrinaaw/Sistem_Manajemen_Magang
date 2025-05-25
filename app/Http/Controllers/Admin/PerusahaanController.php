@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Perusahaan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class PerusahaanController extends Controller
 {
+    protected $baseUrl = 'http://localhost:8080/perusahaan'; // Ganti jika beda
+
     public function index()
     {
-        $perusahaan = Perusahaan::all();
+        $response = Http::get($this->baseUrl);
+        $perusahaan = $response->json();
         return view('admin.perusahaan.index', compact('perusahaan'));
     }
 
@@ -21,44 +24,40 @@ class PerusahaanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nama_perusahaan' => 'required',
             'no_telp' => 'required',
             'alamat' => 'required',
             'email_perusahaan' => 'required|email'
         ]);
 
-        Perusahaan::create($request->all());
-
+        Http::post($this->baseUrl, $validated);
         return redirect()->route('admin.perusahaan.index')->with('success', 'Data berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $perusahaan = Perusahaan::findOrFail($id);
+        $response = Http::get($this->baseUrl . '/' . $id);
+        $perusahaan = $response->json();
         return view('admin.perusahaan.edit', compact('perusahaan'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nama_perusahaan' => 'required',
             'no_telp' => 'required',
             'alamat' => 'required',
             'email_perusahaan' => 'required|email'
         ]);
 
-        $perusahaan = Perusahaan::findOrFail($id);
-        $perusahaan->update($request->all());
-
+        Http::put($this->baseUrl . '/update/' . $id, $validated);
         return redirect()->route('admin.perusahaan.index')->with('success', 'Data berhasil diubah');
     }
 
     public function destroy($id)
     {
-        $perusahaan = Perusahaan::findOrFail($id);
-        $perusahaan->delete();
-
+        Http::delete($this->baseUrl . '/delete/' . $id);
         return redirect()->route('admin.perusahaan.index')->with('success', 'Data berhasil dihapus');
     }
 }

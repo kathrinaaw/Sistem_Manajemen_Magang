@@ -477,13 +477,20 @@
         </div>
 
         <div class="user-info">
-            <div class="user-avatar">AD</div>
+            <div class="user-avatar">{{ strtoupper(substr($user->nama ?? 'AD', 0, 2)) }}</div>
             <div class="user-details">
-                <div class="user-name">Administrator</div>
+                <div class="user-name">{{ $user->nama ?? 'Administrator' }}</div>
+                <div class="user-role">{{ ucfirst($user->role ?? 'Admin') }}</div>
             </div>
         </div>
 
         <nav class="nav-menu">
+            <div class="nav-item">
+                <a href="{{ route('admin.dashboard') }}" class="nav-link active">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </div>
             <div class="nav-item">
                 <a href="{{ route('admin.mahasiswa.index') }}" class="nav-link" data-page="mahasiswa">
                     <i class="nav-icon fas fa-user-graduate"></i>
@@ -514,134 +521,141 @@
     <!-- Main Content -->
     <div class="main-content">
         <header class="header">
-            <h1 class="page-title">Sistem Manajemen Magang</h1>
+            <h1 class="page-title">Dashboard Admin</h1>
             <div class="header-actions">
                 <button class="notification-btn">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge"></span>
                 </button>
-                <button class="notification-btn">
-                    <i class="fas fa-user-circle"></i>
-                </button>
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="notification-btn" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </form>
             </div>
         </header>
 
         <div class="content-area">
             <!-- Dashboard Stats -->
             <div class="dashboard-grid">
-                <a href="#" class="stat-card" data-page="mahasiswa" style="text-decoration: none; color: inherit;">
+                <a href="{{ route('admin.mahasiswa.index') }}" class="stat-card" style="text-decoration: none; color: inherit;">
                     <div class="stat-header">
                         <span class="stat-title">Total Mahasiswa</span>
                         <div class="stat-icon">
                             <i class="fas fa-user-graduate"></i>
                         </div>
                     </div>
-                    <div class="stat-value">1,247</div>
+                    <div class="stat-value">{{ number_format($stats['mahasiswa']) }}</div>
                     <div class="stat-change">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>+12% dari bulan lalu</span>
+                        <i class="fas fa-users"></i>
+                        <span>Mahasiswa terdaftar</span>
                     </div>
                 </a>
 
-                <a href="#" class="stat-card" data-page="magang" style="text-decoration: none; color: inherit;">
-                    <div class="stat-header">
-                        <span class="stat-title">Magang Aktif</span>
-                        <div class="stat-icon">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                    </div>
-                    <div class="stat-value">432</div>
-                    <div class="stat-change">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>+8% dari bulan lalu</span>
-                    </div>
-                </a>
-
-                <a href="#" class="stat-card" data-page="perusahaan" style="text-decoration: none; color: inherit;">
+                <a href="{{ route('admin.perusahaan.index') }}" class="stat-card" style="text-decoration: none; color: inherit;">
                     <div class="stat-header">
                         <span class="stat-title">Perusahaan Mitra</span>
                         <div class="stat-icon">
                             <i class="fas fa-building"></i>
                         </div>
                     </div>
-                    <div class="stat-value">156</div>
+                    <div class="stat-value">{{ number_format($stats['perusahaan']) }}</div>
                     <div class="stat-change">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>+3% dari bulan lalu</span>
+                        <i class="fas fa-handshake"></i>
+                        <span>Mitra aktif</span>
                     </div>
                 </a>
 
-                <a href="#" class="stat-card" data-page="pembimbing" style="text-decoration: none; color: inherit;">
+                <a href="{{ route('admin.pembimbing.index') }}" class="stat-card" style="text-decoration: none; color: inherit;">
                     <div class="stat-header">
                         <span class="stat-title">Pembimbing</span>
                         <div class="stat-icon">
                             <i class="fas fa-chalkboard-teacher"></i>
                         </div>
                     </div>
-                    <div class="stat-value">87</div>
+                    <div class="stat-value">{{ number_format($stats['pembimbing']) }}</div>
                     <div class="stat-change">
-                        <i class="fas fa-arrow-up"></i>
-                        <span>+5% dari bulan lalu</span>
+                        <i class="fas fa-user-tie"></i>
+                        <span>Pembimbing aktif</span>
                     </div>
                 </a>
+
+                <!-- <a href="{{ route('admin.magang.index') }}" class="stat-card" style="text-decoration: none; color: inherit;">
+                    <div class="stat-header">
+                        <span class="stat-title">Program Magang</span>
+                        <div class="stat-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">{{ number_format($stats['magang']) }}</div>
+                    <div class="stat-change">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Program berjalan</span>
+                    </div>
+                </a> -->
             </div>
 
             <!-- Quick Actions -->
             <div class="quick-actions">
                 <h2 class="section-title">Aksi Cepat</h2>
                 <div class="action-grid">
-                    <a href="{{ route('admin.mahasiswa.create') }}" class="action-btn" data-action="add-mahasiswa">
+                    <a href="{{ route('admin.mahasiswa.create') }}" class="action-btn">
                         <i class="fas fa-user-plus"></i>
                         <span>Tambah Mahasiswa</span>
                     </a>
-                    <a href="{{ route('admin.perusahaan.create') }}" class="action-btn" data-action="add-perusahaan">
+                    <a href="{{ route('admin.perusahaan.create') }}" class="action-btn">
                         <i class="fas fa-building"></i>
                         <span>Tambah Perusahaan</span>
                     </a>
-                    <a href="{{ route('admin.pembimbing.create') }}" class="action-btn" data-action="add-pembimbing">
+                    <a href="{{ route('admin.pembimbing.create') }}" class="action-btn">
                         <i class="fas fa-user-tie"></i>
                         <span>Tambah Pembimbing</span>
+                    </a>
+                    <a href="{{ route('admin.magang.create') }}" class="action-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Tambah Program Magang</span>
                     </a>
                 </div>
             </div>
 
-            <!-- Recent Activity -->
+            <!-- Statistics Summary -->
             <div class="recent-activity">
-                <h2 class="section-title">Aktivitas Terbaru</h2>
+                <h2 class="section-title">Ringkasan Sistem</h2>
                 <div class="activity-item">
                     <div class="activity-icon" style="background: linear-gradient(135deg, #48bb78, #38a169);">
-                        <i class="fas fa-user-plus"></i>
+                        <i class="fas fa-user-graduate"></i>
                     </div>
                     <div class="activity-content">
-                        <div class="activity-title">Mahasiswa baru terdaftar: Ahmad Rizki</div>
-                        <div class="activity-time">5 menit yang lalu</div>
+                        <div class="activity-title">Total Mahasiswa: {{ $stats['mahasiswa'] }} orang</div>
+                        <div class="activity-time">Data mahasiswa yang terdaftar dalam sistem</div>
                     </div>
                 </div>
                 <div class="activity-item">
                     <div class="activity-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
-                        <i class="fas fa-file-alt"></i>
+                        <i class="fas fa-building"></i>
                     </div>
                     <div class="activity-content">
-                        <div class="activity-title">Laporan magang dikirim oleh Sari Wulandari</div>
-                        <div class="activity-time">1 jam yang lalu</div>
+                        <div class="activity-title">Perusahaan Mitra: {{ $stats['perusahaan'] }} perusahaan</div>
+                        <div class="activity-time">Perusahaan yang bermitra untuk program magang</div>
                     </div>
                 </div>
                 <div class="activity-item">
                     <div class="activity-icon" style="background: linear-gradient(135deg, #ed8936, #dd6b20);">
-                        <i class="fas fa-building"></i>
+                        <i class="fas fa-chalkboard-teacher"></i>
                     </div>
                     <div class="activity-content">
-                        <div class="activity-title">Perusahaan baru bergabung: PT. Tech Innovate</div>
-                        <div class="activity-time">3 jam yang lalu</div>
+                        <div class="activity-title">Pembimbing: {{ $stats['pembimbing'] }} dosen</div>
+                        <div class="activity-time">Dosen pembimbing yang aktif membimbing mahasiswa</div>
                     </div>
                 </div>
                 <div class="activity-item">
                     <div class="activity-icon" style="background: linear-gradient(135deg, #9f7aea, #805ad5);">
-                        <i class="fas fa-check-circle"></i>
+                        <i class="fas fa-briefcase"></i>
                     </div>
                     <div class="activity-content">
-                        <div class="activity-title">Magang selesai: Budi Santoso dari PT. Digital Media</div>
-                        <div class="activity-time">5 jam yang lalu</div>
+                        <div class="activity-title">Program Magang: {{ $stats['magang'] }} program</div>
+                        <div class="activity-time">Total program magang yang sedang berjalan</div>
                     </div>
                 </div>
             </div>
@@ -667,6 +681,20 @@
             if (window.innerWidth <= 768) {
                 document.getElementById('sidebar').classList.add('collapsed');
             }
+        });
+
+        // Add active state to current page
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
         });
     </script>
 </body>

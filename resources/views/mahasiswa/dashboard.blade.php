@@ -22,15 +22,58 @@
             color: white;
             padding: 1rem 2rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .header h1 {
+        .header-left h1 {
             font-size: 1.8rem;
             margin-bottom: 0.5rem;
         }
         
-        .header p {
+        .header-left p {
             opacity: 0.9;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .user-role {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
         }
         
         .container {
@@ -116,12 +159,46 @@
             color: #666;
             margin-top: 0.5rem;
         }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .user-info {
+                text-align: left;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1><?php echo isset($title) ? $title : 'Dashboard Mahasiswa'; ?></h1>
-        <p>Sistem Manajemen Magang</p>
+        <div class="header-left">
+            <h1><?php echo isset($title) ? $title : 'Dashboard Mahasiswa'; ?></h1>
+            <p>Sistem Manajemen Magang</p>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <div class="user-name">{{ auth()->user()->name ?? 'Mahasiswa' }}</div>
+                <div class="user-role">Mahasiswa</div>
+            </div>
+            <a href="{{ route('logout') }}" class="logout-btn" 
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <span>🚪</span>
+                Logout
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
     </div>
     
     <div class="container">

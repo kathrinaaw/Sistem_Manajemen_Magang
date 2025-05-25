@@ -34,42 +34,6 @@
         </div>
     @endif
 
-    <!-- Stats Card -->
-    <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Pembimbing</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPembimbing }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-user-tie fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Bimbingan Aktif</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                {{ $pembimbingList->sum('bimbingan_aktif') }}
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-tasks fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Data Cards Grid -->
     <div class="row">
         @forelse($pembimbingList as $pembimbing)
@@ -83,36 +47,23 @@
                         </div>
                         <div>
                             <h6 class="m-0 font-weight-bold text-primary">
-                                {{ $pembimbing->nama_pembimbing }}
+                                {{ $pembimbing['nama_pembimbing'] }}
                             </h6>
-                            <small class="text-muted">NIDN: {{ $pembimbing->nidn_pembimbing }}</small>
+                            <small class="text-muted">NIDN: {{ $pembimbing['nidn_pembimbing'] }}</small>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="mb-2">
                             <strong><i class="fas fa-envelope text-gray-400"></i> Email:</strong><br>
-                            <span class="text-muted">{{ $pembimbing->email }}</span>
+                            <span class="text-muted">{{ $pembimbing['email'] }}</span>
                         </div>
                         <div class="mb-3">
                             <strong><i class="fas fa-phone text-gray-400"></i> No. Telepon:</strong><br>
-                            <span class="text-muted">{{ $pembimbing->no_telp }}</span>
-                        </div>
-                        
-                        <div class="row text-center mb-3">
-                            <div class="col-6">
-                                <div class="border-right">
-                                    <div class="h5 font-weight-bold text-primary">{{ $pembimbing->jumlah_bimbingan }}</div>
-                                    <div class="text-xs text-uppercase text-muted">Total Bimbingan</div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="h5 font-weight-bold text-success">{{ $pembimbing->bimbingan_aktif }}</div>
-                                <div class="text-xs text-uppercase text-muted">Aktif</div>
-                            </div>
+                            <span class="text-muted">{{ $pembimbing['no_telp'] }}</span>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="{{ route('mahasiswa.pembimbing.show', $pembimbing->nidn_pembimbing) }}" 
+                        <a href="{{ route('mahasiswa.pembimbing.show', $pembimbing['nidn_pembimbing']) }}" 
                            class="btn btn-info btn-sm btn-block">
                             <i class="fas fa-eye"></i> Lihat Detail
                         </a>
@@ -134,13 +85,13 @@
         @endforelse
     </div>
 
-    <!-- Alternative Table View -->
+    <!-- Tabel Data Pembimbing -->
     <div class="card shadow mb-4 mt-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Tabel Data Pembimbing</h6>
         </div>
         <div class="card-body">
-            @if($pembimbingList->count() > 0)
+            @if(count($pembimbingList) > 0)
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -150,8 +101,6 @@
                                 <th>Nama Pembimbing</th>
                                 <th>Email</th>
                                 <th>No. Telepon</th>
-                                <th>Total Bimbingan</th>
-                                <th>Bimbingan Aktif</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -159,24 +108,12 @@
                             @foreach($pembimbingList as $index => $pembimbing)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $pembimbing->nidn_pembimbing }}</td>
+                                    <td>{{ $pembimbing['nidn_pembimbing'] }}</td>
+                                    <td><strong>{{ $pembimbing['nama_pembimbing'] }}</strong></td>
+                                    <td>{{ $pembimbing['email'] }}</td>
+                                    <td>{{ $pembimbing['no_telp'] }}</td>
                                     <td>
-                                        <strong>{{ $pembimbing->nama_pembimbing }}</strong>
-                                    </td>
-                                    <td>{{ $pembimbing->email }}</td>
-                                    <td>{{ $pembimbing->no_telp }}</td>
-                                    <td>
-                                        <span class="badge badge-primary">
-                                            {{ $pembimbing->jumlah_bimbingan }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-success">
-                                            {{ $pembimbing->bimbingan_aktif }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('mahasiswa.pembimbing.show', $pembimbing->nidn_pembimbing) }}" 
+                                        <a href="{{ route('mahasiswa.pembimbing.show', $pembimbing['nidn_pembimbing']) }}" 
                                            class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i> Detail
                                         </a>
