@@ -134,6 +134,28 @@ protected $apiUrl = 'http://localhost:8080/magang';
 
 MAHASISWA
 
+DashboardController
+```php
+private $apiBaseUrl = 'http://localhost:8080';
+```
+
+PembimbingController
+```php
+$response = Http::get('http://localhost:8080/pembimbing');
+```
+
+PerusahaanController
+```php
+$response = Http::get('http://localhost:8080/perusahaan');
+```
+
+MagangController
+```php
+protected $apiUrl = 'http://localhost:8080/magang';
+    protected $mahasiswaApiUrl = 'http://localhost:8080/mahasiswa';
+    protected $perusahaanApiUrl = 'http://localhost:8080/perusahaan';
+    protected $pembimbingApiUrl = 'http://localhost:8080/pembimbing';
+```
 
 ---
 
