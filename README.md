@@ -107,7 +107,7 @@ AuthController
 private $apiBaseUrl = 'http://localhost:8080/';
 ```
 
-ADMIN
+* ADMIN
 
 DashboardController
 ```php
@@ -137,7 +137,7 @@ protected $apiUrl = 'http://localhost:8080/magang';
     protected $pembimbingApiUrl = 'http://localhost:8080/pembimbing';
 ```
 
-MAHASISWA
+* MAHASISWA
 
 DashboardController
 ```php
