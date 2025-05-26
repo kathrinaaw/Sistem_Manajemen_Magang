@@ -6,12 +6,11 @@ Aplikasi manajemen magang berbasis web yang memisahkan hak akses berdasarkan rol
 
 ## 💠 Teknologi yang Digunakan
 
-* **Laravel 10.x**
-* **PHP 8.x**
+* **Laravel **
+* **PHP 8.3**
 * **MySQL**
-* **Bootstrap 5 (opsional)** untuk UI
+* UI html & css
 * **Laravel HTTP Client** untuk komunikasi ke backend eksternal (API)
-* **CodeIgniter 4 API** sebagai backend (opsional)
 
 ---
 
