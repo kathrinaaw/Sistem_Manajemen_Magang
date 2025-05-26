@@ -12,7 +12,7 @@ Laravel adalah framework PHP yang digunakan untuk membangun aplikasi web dengan 
 * **Laravel 12 (Laravel Framework 12.14.1)**
 * **PHP 8.3**
 * **MySQL**
-* UI menggunakan html & css
+* UI menggunakan html, css
 * **Laravel HTTP Client** untuk komunikasi ke backend eksternal (API)
 
 ---
