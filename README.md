@@ -101,8 +101,6 @@ $data = $response->json();
 protected $apiUrl = 'http://localhost:8080/magang';
 ```
 
----
-
 
 
 ---
