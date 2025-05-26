@@ -6,10 +6,10 @@ Aplikasi manajemen magang berbasis web yang memisahkan hak akses berdasarkan rol
 
 ## 💠 Teknologi yang Digunakan
 
-* **Laravel **
+* **Laravel 12 (Laravel Framework 12.14.1) **
 * **PHP 8.3**
 * **MySQL**
-* UI html & css
+* UI menggunakan html & css
 * **Laravel HTTP Client** untuk komunikasi ke backend eksternal (API)
 
 ---
@@ -18,11 +18,9 @@ Aplikasi manajemen magang berbasis web yang memisahkan hak akses berdasarkan rol
 
 ### 1. Pastikan Software Terinstal:
 
-* PHP 8.1+ (`php -v`)
+* PHP 8.3+ (`php -v`)
 * Composer (`composer -V`)
 * MySQL/MariaDB
-* Git (opsional)
-* Laravel installer (opsional):
 
 ### 2. Buat Project Laravel Baru
 
@@ -67,7 +65,23 @@ php artisan key:generate
 
 ---
 
-## 🌐 Komunikasi ke Backend API (CodeIgniter 4)
+## 📂 Struktur Folder
+
+```
+app/
+├── Http/
+│   └── Controllers/
+│       └── Admin/
+│       └── Mahasiswa/
+resources/
+├── views/
+│   └── admin/
+│   └── mahasiswa/
+routes/
+└── web.php
+```
+
+## 🌐 Komunikasi ke Backend API (CodeIgniter)
 
 ### Contoh Controller Laravel:
 
@@ -86,21 +100,7 @@ protected $apiUrl = 'http://localhost:8080/magang';
 
 ---
 
-## 📂 Struktur Folder Penting
 
-```
-app/
-├── Http/
-│   └── Controllers/
-│       └── Admin/
-│       └── Mahasiswa/
-resources/
-├── views/
-│   └── admin/
-│   └── mahasiswa/
-routes/
-└── web.php
-```
 
 ---
 
