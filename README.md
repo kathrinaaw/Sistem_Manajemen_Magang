@@ -12,7 +12,7 @@ Laravel adalah framework PHP yang digunakan untuk membangun aplikasi web dengan 
 * **Laravel 12 (Laravel Framework 12.14.1)**
 * **PHP 8.3**
 * **MySQL**
-* UI menggunakan html, css
+* UI menggunakan html, css, dan bootstrap
 * **Laravel HTTP Client** untuk komunikasi ke backend eksternal (API)
 
 ---
@@ -92,7 +92,12 @@ routes/
 use Illuminate\Support\Facades\Http;
 
 $response = Http::get('http://localhost:8080/magang');
-$data = $response->json();
+```
+
+```php
+class DashboardController extends Controller
+{
+    private $apiBaseUrl = 'http://localhost:8080';
 ```
 
 ### URL API dari Backend:
