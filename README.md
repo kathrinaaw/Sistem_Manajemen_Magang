@@ -97,25 +97,43 @@ $data = $response->json();
 
 ### URL API dari Backend:
 
-URL API: MahasiswaController
+AuthController
+```php
+private $apiBaseUrl = 'http://localhost:8080/';
+```
+
+ADMIN
+
+DashboardController
+```php
+private $apiBaseUrl = 'http://localhost:8080';
+```
+
+MahasiswaController
 ```php
 protected $apiUrl = 'http://localhost:8080/mahasiswa';
 ```
 
-URL API: PembimbingController
+PembimbingController
 ```php
 protected $apiUrl = 'http://localhost:8080/pembimbing';
 ```
 
-URL API: PerusahaanController
+PerusahaanController
 ```php
 protected $apiUrl = 'http://localhost:8080/perusahaan';
 ```
 
-URL API: MagangController
+MagangController
 ```php
 protected $apiUrl = 'http://localhost:8080/magang';
+    protected $mahasiswaApiUrl = 'http://localhost:8080/mahasiswa';
+    protected $perusahaanApiUrl = 'http://localhost:8080/perusahaan';
+    protected $pembimbingApiUrl = 'http://localhost:8080/pembimbing';
 ```
+
+MAHASISWA
+
 
 ---
 
