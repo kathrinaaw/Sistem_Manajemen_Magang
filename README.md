@@ -95,13 +95,27 @@ $response = Http::get('http://localhost:8080/magang');
 $data = $response->json();
 ```
 
-### Contoh URL API:
+### URL API dari Backend:
 
+URL API: MahasiswaController
+```php
+protected $apiUrl = 'http://localhost:8080/mahasiswa';
+```
+
+URL API: PembimbingController
+```php
+protected $apiUrl = 'http://localhost:8080/pembimbing';
+```
+
+URL API: PerusahaanController
+```php
+protected $apiUrl = 'http://localhost:8080/perusahaan';
+```
+
+URL API: MagangController
 ```php
 protected $apiUrl = 'http://localhost:8080/magang';
 ```
-
-
 
 ---
 
