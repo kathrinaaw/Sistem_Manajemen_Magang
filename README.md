@@ -569,3 +569,10 @@ Akses di browser: [http://localhost:8000](http://localhost:8000)
 
 ---
 
+## Membuat Repo Github
+1. git init
+2.  git remote add origin https://github.com/kathrinaaw/Sistem_Manajemen_Magang.git
+3. git add .
+4. git commit -m "Initial commit - FE Sistem Manajemen Magang"
+5. git pull origin master
+6. git push origin master
